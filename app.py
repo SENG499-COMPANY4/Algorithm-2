@@ -7,7 +7,7 @@ app = Flask(__name__)
 def class_size():
     return "hello world"
 
-@app.route('/termschedule',methods=['POST'])
+@app.route('/get_class_size', methods=['GET', 'POST'])
 def schedule():
     return "v2"
 
