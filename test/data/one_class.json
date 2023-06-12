@@ -9,12 +9,12 @@
   "pastEnrol": [
     {
         "year": 2017,
-        "term": 2,
+        "term": 5,
         "size": 75
     },
     {
         "year": 2017,
-        "term": 3,
+        "term": 9,
         "size": 132
     },
     {
@@ -24,12 +24,12 @@
     },
     {
         "year": 2018,
-        "term": 2,
+        "term": 5,
         "size": 105
     },
     {
         "year": 2018,
-        "term": 3,
+        "term": 9,
         "size": 129
     },
     {
@@ -39,12 +39,12 @@
     },
     {
         "year": 2019,
-        "term": 2,
+        "term": 5,
         "size": 86
     },
     {
         "year": 2019,
-        "term": 3,
+        "term": 9,
         "size": 130
     },
     {
@@ -54,12 +54,12 @@
     },
     {
         "year": 2020,
-        "term": 2,
+        "term": 5,
         "size": 132
     },
     {
         "year": 2020,
-        "term": 3,
+        "term": 9,
         "size": 156
     },
     {
@@ -69,12 +69,12 @@
     },
     {
         "year": 2021,
-        "term": 2,
+        "term": 5,
         "size": 146
     },
     {
         "year": 2021,
-        "term": 3,
+        "term": 9,
         "size": 135
     },
     {
@@ -84,12 +84,12 @@
     },
     {
         "year": 2022,
-        "term": 2,
+        "term": 5,
         "size": 91
     },
     {
         "year": 2022,
-        "term": 3,
+        "term": 9,
         "size": 159
     },
     {
@@ -99,7 +99,7 @@
     },
     {
         "year": 2023,
-        "term": 2,
+        "term": 5,
         "size": 85
     }
   ]
