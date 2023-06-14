@@ -1,0 +1,16 @@
+{
+    "course": "csc115",
+    "prereq": [
+      "csc110",
+      "csc111"
+    ],
+    "coreq": [
+    ],
+    "pastEnrol": [
+      {
+          "year": 2017,
+          "term": 5,
+          "size": 75
+      }
+    ]
+  }
