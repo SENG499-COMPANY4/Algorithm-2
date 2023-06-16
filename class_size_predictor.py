@@ -3,21 +3,44 @@ import pandas as pd
 from patsy import dmatrices
 import json
 
-"""
-    "pastEnrolment": [{
-            "year": int,
-            "term": int,
-            "size": int
-        }],
 
-    "term": int,
-"""
-def classSizePredictor(data, semesters_to_predict):
-    # Load JSON data
-    jsonData = json.load(data)
-    
+# Fill gaps between terms in the DataFrame
+def fillGaps(df):
+    # Add data points between each term (e.g. between 2019-09 and 2020-01, add 2019-10, 2019-11, 2019-12)
+    for i in range(df.shape[0] - 1):
+        # Get the current semester and the next semester
+        current_semester = df['semester'].iloc[i]
+        next_semester = df['semester'].iloc[i + 1]
+
+        # Add data points between the current semester and the next semester
+        semesters_to_fill = pd.date_range(start=current_semester, end=next_semester, freq='1M')[1:]
+        
+        # Get size and term of current_semester
+        size = df['size'].iloc[i]
+        term = df['term'].iloc[i]
+
+        # Create a DataFrame with the filled semesters (year, term, size, semester)
+        filled_df = pd.DataFrame({'year': semesters_to_fill.strftime('%Y'),
+                                    'term': term,
+                                    'semester': semesters_to_fill.strftime('%Y-%m'), 
+                                    'size': size})
+        
+        # Append the filled DataFrame to the original DataFrame if not empty
+        if filled_df.shape[0] > 0:
+            df = df._append(filled_df, ignore_index=True)
+
+    # Sort the DataFrame by 'semester' column
+    df.sort_values('semester', inplace=True)
+
+    # Reset the index to normalize the order
+    df.reset_index(drop=True, inplace=True)
+    return df
+
+
+def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
+
     # Extract past enrollment data
-    pastEnrollmentData = jsonData["pastEnrollment"]
+    pastEnrollmentData = data["pastEnrol"]
 
     # Create a DataFrame from the JSON data
     df = pd.DataFrame(pastEnrollmentData)
@@ -29,77 +52,97 @@ def classSizePredictor(data, semesters_to_predict):
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
 
-    # Interpolate missing values
-    mean_size = df['size'].mean()
-    # Add missing semesters between last semester and the first semester to predict
-    semesters_to_fill = pd.date_range(start=df['semester'].iloc[-1], end=semesters_to_predict[0], freq='4M')[1:]
-    filled_df = pd.DataFrame({'semester': semesters_to_fill.strftime('%Y-%m'), 'size': mean_size})
+    # Create a DataFrame for the next terms to predict
+    next_terms_df = pd.DataFrame({'semester': pd.to_datetime(semesters_to_predict)})
+    # Set term column to month of semester
+    next_terms_df['term'] = next_terms_df['semester'].dt.month
+    next_terms_df['year'] = next_terms_df['semester'].dt.year
+    next_terms_df['size'] = 0
+    next_terms_df['semester'] = next_terms_df['semester'].dt.strftime('%Y-%m')
 
-    # Append the filled DataFrame to the original DataFrame
-    df = pd.concat([df, filled_df], ignore_index=True)
+    # Concatenate the next_terms_df to the df
+    df = pd.concat([df, next_terms_df], ignore_index=True)
 
-    print(df)
+    # Fill gaps between terms in the DataFrame
+    df = fillGaps(df)
 
-    for models in sarima_configs():
+    # Create monthly trend indicators as exogenous variables
+    df['month'] = pd.to_datetime(df['semester']).dt.month
+    exog = pd.get_dummies(df['month'], prefix='month', drop_first=True)
+
+    # Create a SARIMAX time series model with exogenous variables
+    trend = 'n'
+    endog = df['size']
+    res = sm.tsa.statespace.SARIMAX(endog=endog, exog=exog, order=order, seasonal_order=seasonal_order, trend=trend)
+    res = res.fit(disp=False, maxiter=1000)
+
+    # Get the start and end dates indexes in df for prediction
+    start_index = df[df['semester'] == semesters_to_predict[0]].index[0]
+    end_index = df[df['semester'] == semesters_to_predict[-1]].index[0]
+
+    # Predict the class size for the terms in next_terms_df
+    predicted_values = res.predict(start=start_index, end=end_index, exog=exog[start_index:end_index+1])
+    
+    # Add the predicted values to the DataFrame
+    df.loc[start_index:end_index, 'size'] = predicted_values
+
+    # Create a DataFrame to hold the final predictions
+    predictions_df = pd.DataFrame({'semester': semesters_to_predict, 'size': 0})
+    # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
+    for semester in semesters_to_predict:
+        # Get the index of the given semester
+        index = df[df['semester'] == semester].index[0]
         
-        # Create a SARIMA time series model
-        order, seasonal_order, trend = models
-        endog, exog = dmatrices('size ~ semester', df, return_type='dataframe')
-        try:
-            res = sm.tsa.statespace.SARIMAX(endog, exog, order=order, seasonal_order=seasonal_order, trend=trend)
-                
-            
-            start_params = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-            res = res.fit(start_params=start_params, disp=False, maxiter=1000)
+        if int(df.loc[index, 'size']) == 0:
+            average = df.loc[index+1:index+3, 'size'].mean()
+        elif index == df.shape[0] - 1:
+            average = df.loc[index, 'size']
+        else:
+            # Get the average of the predicted values on that semester
+            average = df.loc[index:index+3, 'size'].mean()
 
+        # Save the average to the DataFrame
+        predictions_df.loc[predictions_df['semester'] == semester, 'size'] = int(average)
+    
+    # Return the predicted sizes for the given semesters_to_predict 
+    return predictions_df
 
-            # Predict the class sizes for the next semesters
-            next_terms_df = pd.DataFrame({'semester': pd.to_datetime(semesters_to_predict, format='%Y-%m').strftime('%Y-%m')})
+# Convert predictions_df to JSON
+# JSON data should be in the following format: list of JSON
+# [{ course: string, size: int, term: int}]
+def convertToJSON(predictions_df, course):
+    # Create a list to hold the JSON data
+    json_data = []
+    # Create a dictionary to hold the JSON data for each semester
+    json_dict = {}
+    # Create a list to hold the terms
+    terms = []
+    # Create a list to hold the sizes
+    sizes = []
 
-            # Forecast the class sizes
-            predicted_values = res.predict(start=next_terms_df.index[0], end=next_terms_df.index[-1])
+    # Get the terms and sizes from the predictions_df
+    for index, row in predictions_df.iterrows():
+        terms.append(row['semester'])
+        sizes.append(row['size'])
+    
+    # Add the terms and sizes to the json_dict
+    json_dict['terms'] = terms
+    json_dict['sizes'] = sizes
+    json_dict['course'] = course
 
-            # Assign the predicted values to the DataFrame
-            next_terms_df['predicted_size'] = predicted_values
-            if next_terms_df['predicted_size'].isnull().values.any():
-                continue
+    # Add the json_dict to the json_data
+    json_data.append(json_dict)
 
-            # if predicted value is less than 50, continue
-            if next_terms_df['predicted_size'].values[0] < 50:
-                continue
-            print(models)
-            print(next_terms_df)
-        except:
-            continue
-    # return next_terms_df
+    # Return the JSON data
+    return json_data
 
-
-def sarima_configs(seasonal=[3]):
-    models = list()
-    # define config lists
-    p_params = [0, 1, 2]
-    d_params = [0, 1]
-    q_params = [0, 1, 2]
-    t_params = ['n','c','t','ct']
-    P_params = [0, 1, 2]
-    D_params = [0, 1]
-    Q_params = [0, 1, 2]
-    m_params = seasonal
-    # create config instances
-    for p in p_params:
-        for d in d_params:
-            for q in q_params:
-                for t in t_params:
-                    for P in P_params:
-                        for D in D_params:
-                            for Q in Q_params:
-                                for m in m_params:
-                                    cfg = [(p,d,q), (P,D,Q,m), t]
-                                    models.append(cfg)
-    return models
-
-# import test_data.json
 semesters_to_predict = ['2023-09', '2024-01', '2024-05']
-with open('test_data.json') as data:
-    classSizePredictor(data, semesters_to_predict)
+with open('test/data/one_class.json') as data:
+    # Load the JSON data
+    data = json.load(data)
+    predictions = classSizePredictor(data, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
+    predictions_json = convertToJSON(predictions, data['course'])
+    print(predictions_json)
+    
+
     
