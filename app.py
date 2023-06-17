@@ -16,6 +16,10 @@ def internal_error(e):
 def hello():
     return "Hello World!"
 
+@app.route('/c')
+def test():
+    return "Test Route"
+
 @app.route('/predict_class_sizes', methods=['GET', 'POST'])
 def class_size():
     if request.method == 'GET':
