@@ -16,16 +16,14 @@ def internal_error(e):
 def hello():
     return "Hello World!"
 
-
 @app.route('/predict_class_sizes', methods=['GET', 'POST'])
 def class_size():
     if request.method == 'GET':
-        #response = jsonify(returnClassSize())
-        #return response
-        return "get class size"
+        response = jsonify(returnClassSize())
+        return response
+        
     elif request.method == 'POST':
         data = request.json
         # TODO: Process data, update class size predictions
-        #return jsonify({"message": "Data received and processed"}), 200
-        return "post class size"
+        return jsonify({"message": "Data received and processed"}), 200
 
