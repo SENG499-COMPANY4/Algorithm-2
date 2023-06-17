@@ -27,7 +27,7 @@ def fillGaps(df):
         
         # Append the filled DataFrame to the original DataFrame if not empty
         if filled_df.shape[0] > 0:
-            df = df.append(filled_df, ignore_index=True)
+            df = pd.concat([df, filled_df], ignore_index=True)
 
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
@@ -145,5 +145,3 @@ def returnClassSize():
         predictions_json = convertToJSON(predictions, data['course'])
 
         return predictions_json
-
-    
