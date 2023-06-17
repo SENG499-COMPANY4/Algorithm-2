@@ -19,8 +19,8 @@ def hello():
 @app.route('/predict_class_sizes', methods=['GET', 'POST'])
 def class_size():
     if request.method == 'GET':
-        response = jsonify(returnClassSize())
-        return response
+        response = returnClassSize()
+        return str(response)
         
     elif request.method == 'POST':
         data = request.json
