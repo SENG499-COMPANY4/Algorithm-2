@@ -19,11 +19,17 @@ def hello():
 @app.route('/predict_class_sizes', methods=['GET', 'POST'])
 def class_size():
     if request.method == 'GET':
-        response = returnClassSize()
-        return str(response)
+        try:
+            response = jsonify(returnClassSize())
+            return response
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
         
     elif request.method == 'POST':
-        data = request.json
-        # TODO: Process data, update class size predictions
-        return jsonify({"message": "Data received and processed"}), 200
+        try:
+            data = request.json
+            # TODO: Process data, update class size predictions
+            return jsonify({"message": "Data received and processed"}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
