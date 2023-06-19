@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - master
+      - test-bench
   workflow_dispatch:
 
 jobs:
