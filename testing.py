@@ -16,7 +16,7 @@ class api_tests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.data,
-            b'Hello World!',
+            b'Hello Worl!',
         )
     
 if __name__ == "__main__":
