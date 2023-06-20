@@ -146,4 +146,3 @@ def returnClassSize():
 
         return predictions_json
     
-print(returnClassSize())
