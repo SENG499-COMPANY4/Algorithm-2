@@ -145,3 +145,4 @@ def returnClassSize():
         predictions_json = convertToJSON(predictions, data['course'])
 
         return predictions_json
+    
