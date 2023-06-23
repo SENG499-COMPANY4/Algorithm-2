@@ -108,33 +108,18 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     return predictions_df
 
 # Convert predictions_df to JSON
-# JSON data should be in the following format: list of JSON
+# JSON data should be in the following format: list of JSON objects like the following:
 # [{ course: string, size: int, term: int}]
 def convertToJSON(predictions_df, course):
-    # Create a list to hold the JSON data
-    json_data = []
-    # Create a dictionary to hold the JSON data for each semester
-    json_dict = {}
-    # Create a list to hold the terms
-    terms = []
-    # Create a list to hold the sizes
-    sizes = []
-
-    # Get the terms and sizes from the predictions_df
-    for index, row in predictions_df.iterrows():
-        terms.append(row['semester'])
-        sizes.append(row['size'])
+    # Create a list of JSON objects
+    predictions_json = []
+    for i in range(predictions_df.shape[0]):
+        # Create a JSON object for the current row
+        prediction_json = {'course': course, 'size': int(predictions_df.loc[i, 'size']), 'term': int(predictions_df.loc[i, 'semester'].split('-')[1])}
+        # Append the JSON object to the list
+        predictions_json.append(prediction_json)
     
-    # Add the terms and sizes to the json_dict
-    json_dict['terms'] = terms
-    json_dict['sizes'] = sizes
-    json_dict['course'] = course
-
-    # Add the json_dict to the json_data
-    json_data.append(json_dict)
-
-    # Return the JSON data
-    return json_data
+    return predictions_json
 
 def returnClassSize():
     semesters_to_predict = ['2023-09', '2024-01', '2024-05']
@@ -145,3 +130,5 @@ def returnClassSize():
         predictions_json = convertToJSON(predictions, data['course'])
 
         return predictions_json
+
+print(returnClassSize())
