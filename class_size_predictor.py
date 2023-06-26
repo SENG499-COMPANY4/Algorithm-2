@@ -52,8 +52,12 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
 
+    # Add a semseter on the end of semesters_to_predict to predict the next term
+    semesters_to_predict.append((pd.to_datetime(semesters_to_predict[-1], format='%Y-%m') + pd.DateOffset(months=4)).strftime('%Y-%m'))
+    
     # Create a DataFrame for the next terms to predict
     next_terms_df = pd.DataFrame({'semester': pd.to_datetime(semesters_to_predict)})
+
     # Set term column to month of semester
     next_terms_df['term'] = next_terms_df['semester'].dt.month
     next_terms_df['year'] = next_terms_df['semester'].dt.year
@@ -87,9 +91,9 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     df.loc[start_index:end_index, 'size'] = predicted_values
 
     # Create a DataFrame to hold the final predictions
-    predictions_df = pd.DataFrame({'semester': semesters_to_predict, 'size': 0})
+    predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': 0})
     # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
-    for semester in semesters_to_predict:
+    for semester in semesters_to_predict[:-1]:
         # Get the index of the given semester
         index = df[df['semester'] == semester].index[0]
         
@@ -122,12 +126,12 @@ def convertToJSON(predictions_df, course):
     return predictions_json
 
 def returnClassSize():
-    semesters_to_predict = ['2023-09', '2024-01', '2024-05']
-    with open('test/data/one_class.json') as data:
+    semesters_to_predict = ['2024-05', '2024-09', '2025-01']
+    with open('test/data/one_class_skip_a_year.json') as data:
         # Load the JSON data
         data = json.load(data)
-        predictions = classSizePredictor(data, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
-        predictions_json = convertToJSON(predictions, data['course'])
-
+        predictions_json = []
+        for course in data:
+            predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
+            predictions_json += convertToJSON(predictions, course['course'])
         return predictions_json
-
