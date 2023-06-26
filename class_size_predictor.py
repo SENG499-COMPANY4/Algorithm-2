@@ -146,5 +146,3 @@ def returnClassSize():
             predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
             predictions_json += convertToJSON(predictions, course['course'])
         return predictions_json
-
-print(returnClassSize())
