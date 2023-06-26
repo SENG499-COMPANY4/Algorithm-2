@@ -24,7 +24,7 @@ def hello():
 def class_size():
     if request.method == 'POST':
         try:
-            response = jsonify(returnClassSize(request.json))
+            response = jsonify(returnClassSize(request.json)), 200
             return response
         except Exception as e:
             return jsonify({"error": str(e)}), 500

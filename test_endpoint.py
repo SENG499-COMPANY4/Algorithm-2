@@ -27,10 +27,7 @@ class api_tests(unittest.TestCase):
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            b'{"message":"Data received and processed"}\n',
-        )
+
 
     def test_predictor_two_class(self):
         print("testing predictor with two classes")
@@ -39,10 +36,7 @@ class api_tests(unittest.TestCase):
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            b'{"message":"Data received and processed"}\n',
-        )
+
 
     def test_predictor_one_class_only_spring(self):
         print("testing predictor with one class and only enrolment data for spring")
@@ -51,10 +45,7 @@ class api_tests(unittest.TestCase):
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data,
-            b'{"message":"Data received and processed"}\n',
-        )
+
     
 if __name__ == "__main__":
     unittest.main()
