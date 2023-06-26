@@ -1,0 +1,155 @@
+[
+    {
+        "course": "engr120",
+        "prereq": [
+            "engr110"
+        ],
+        "coreq": [
+            "csc110",
+            "csc111"
+        ],
+        "pastEnrol": [
+            {
+                "year": 2017,
+                "term": 1,
+                "size": 393
+            },
+            {
+                "year": 2018,
+                "term": 1,
+                "size": 393
+            },
+            {
+                "year": 2019,
+                "term": 1,
+                "size": 354
+            },
+            {
+                "year": 2020,
+                "term": 1,
+                "size": 356
+            },
+            {
+                "year": 2021,
+                "term": 1,
+                "size": 319
+            },
+            {
+                "year": 2022,
+                "term": 1,
+                "size": 346
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 338
+            }
+        ]
+    },
+    {
+        "course": "csc115",
+        "prereq": [
+          "csc110",
+          "csc111"
+        ],
+        "coreq": [
+        ],
+        "pastEnrol": [
+          {
+              "year": 2017,
+              "term": 5,
+              "size": 75
+          },
+          {
+              "year": 2017,
+              "term": 9,
+              "size": 132
+          },
+          {
+              "year": 2018,
+              "term": 1,
+              "size": 352
+          },
+          {
+              "year": 2018,
+              "term": 5,
+              "size": 105
+          },
+          {
+              "year": 2018,
+              "term": 9,
+              "size": 129
+          },
+          {
+              "year": 2019,
+              "term": 1,
+              "size": 357
+          },
+          {
+              "year": 2019,
+              "term": 5,
+              "size": 86
+          },
+          {
+              "year": 2019,
+              "term": 9,
+              "size": 130
+          },
+          {
+              "year": 2020,
+              "term": 1,
+              "size": 299
+          },
+          {
+              "year": 2020,
+              "term": 5,
+              "size": 132
+          },
+          {
+              "year": 2020,
+              "term": 9,
+              "size": 156
+          },
+          {
+              "year": 2021,
+              "term": 1,
+              "size": 312
+          },
+          {
+              "year": 2021,
+              "term": 5,
+              "size": 146
+          },
+          {
+              "year": 2021,
+              "term": 9,
+              "size": 135
+          },
+          {
+              "year": 2022,
+              "term": 1,
+              "size": 316
+          },
+          {
+              "year": 2022,
+              "term": 5,
+              "size": 91
+          },
+          {
+              "year": 2022,
+              "term": 9,
+              "size": 159
+          },
+          {
+              "year": 2023,
+              "term": 1,
+              "size": 353
+          },
+          {
+              "year": 2023,
+              "term": 5,
+              "size": 85
+          }
+        ]
+    }
+]
