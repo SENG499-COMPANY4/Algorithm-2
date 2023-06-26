@@ -8,6 +8,10 @@ app = Flask(__name__)
 def resource_not_found(e):
     return jsonify(error=str(e)), 404
 
+@app.errorhandler(405)
+def method_not_allowed(e):
+    return jsonify(error=str(e)), 405
+
 @app.errorhandler(500)
 def internal_error(e):
     return jsonify(error=str(e)), 500
@@ -18,18 +22,11 @@ def hello():
 
 @app.route('/predict_class_sizes', methods=['GET', 'POST'])
 def class_size():
-    if request.method == 'GET':
+    if request.method == 'POST':
         try:
-            response = jsonify(returnClassSize())
+            response = jsonify(returnClassSize(request.json))
             return response
         except Exception as e:
             return jsonify({"error": str(e)}), 500
-        
-    elif request.method == 'POST':
-        try:
-            data = request.json
-            # TODO: Process data, update class size predictions
-            return jsonify({"message": "Data received and processed"}), 200
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
-
+    else:
+        return jsonify({"error": "405: Method not allowed"}), 405

@@ -125,13 +125,10 @@ def convertToJSON(predictions_df, course):
     
     return predictions_json
 
-def returnClassSize():
+def returnClassSize(data_from_post):
     semesters_to_predict = ['2024-05', '2024-09', '2025-01']
-    with open('test/data/one_class_skip_a_year.json') as data:
-        # Load the JSON data
-        data = json.load(data)
-        predictions_json = []
-        for course in data:
-            predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
-            predictions_json += convertToJSON(predictions, course['course'])
-        return predictions_json
+    predictions_json = []
+    for course in data_from_post:
+        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
+        predictions_json += convertToJSON(predictions, course['course'])
+    return predictions_json
