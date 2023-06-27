@@ -20,7 +20,7 @@ def internal_error(e):
 def hello():
     return "Hello World!"
 
-@app.route('/predict_class_sizes', methods=['GET', 'POST'])
+@app.route('/predict_class_sizes', methods=['POST'])
 def class_size():
     if request.method == 'POST':
         try:
