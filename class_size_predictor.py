@@ -52,8 +52,12 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
 
+    # Add a semseter on the end of semesters_to_predict to predict the next term
+    semesters_to_predict.append((pd.to_datetime(semesters_to_predict[-1], format='%Y-%m') + pd.DateOffset(months=4)).strftime('%Y-%m'))
+    
     # Create a DataFrame for the next terms to predict
     next_terms_df = pd.DataFrame({'semester': pd.to_datetime(semesters_to_predict)})
+
     # Set term column to month of semester
     next_terms_df['term'] = next_terms_df['semester'].dt.month
     next_terms_df['year'] = next_terms_df['semester'].dt.year
@@ -87,9 +91,9 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     df.loc[start_index:end_index, 'size'] = predicted_values
 
     # Create a DataFrame to hold the final predictions
-    predictions_df = pd.DataFrame({'semester': semesters_to_predict, 'size': 0})
+    predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': 0})
     # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
-    for semester in semesters_to_predict:
+    for semester in semesters_to_predict[:-1]:
         # Get the index of the given semester
         index = df[df['semester'] == semester].index[0]
         
@@ -108,40 +112,23 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     return predictions_df
 
 # Convert predictions_df to JSON
-# JSON data should be in the following format: list of JSON
+# JSON data should be in the following format: list of JSON objects like the following:
 # [{ course: string, size: int, term: int}]
 def convertToJSON(predictions_df, course):
-    # Create a list to hold the JSON data
-    json_data = []
-    # Create a dictionary to hold the JSON data for each semester
-    json_dict = {}
-    # Create a list to hold the terms
-    terms = []
-    # Create a list to hold the sizes
-    sizes = []
-
-    # Get the terms and sizes from the predictions_df
-    for index, row in predictions_df.iterrows():
-        terms.append(row['semester'])
-        sizes.append(row['size'])
+    # Create a list of JSON objects
+    predictions_json = []
+    for i in range(predictions_df.shape[0]):
+        # Create a JSON object for the current row
+        prediction_json = {'course': course, 'size': int(predictions_df.loc[i, 'size']), 'term': int(predictions_df.loc[i, 'semester'].split('-')[1])}
+        # Append the JSON object to the list
+        predictions_json.append(prediction_json)
     
-    # Add the terms and sizes to the json_dict
-    json_dict['terms'] = terms
-    json_dict['sizes'] = sizes
-    json_dict['course'] = course
+    return predictions_json
 
-    # Add the json_dict to the json_data
-    json_data.append(json_dict)
-
-    # Return the JSON data
-    return json_data
-
-def returnClassSize():
-    semesters_to_predict = ['2023-09', '2024-01', '2024-05']
-    with open('test/data/one_class.json') as data:
-        # Load the JSON data
-        data = json.load(data)
-        predictions = classSizePredictor(data, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
-        predictions_json = convertToJSON(predictions, data['course'])
-
-        return predictions_json
+def returnClassSize(data_from_post):
+    semesters_to_predict = ['2024-05', '2024-09', '2025-01']
+    predictions_json = []
+    for course in data_from_post:
+        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
+        predictions_json += convertToJSON(predictions, course['course'])
+    return predictions_json
