@@ -12,6 +12,10 @@ def resource_not_found(e):
 def method_not_allowed(e):
     return jsonify(error=str(e)), 405
 
+@app.errorhandler(415)
+def unsupported_media_type(e):
+    return jsonify(error=str(e)), 415
+
 @app.errorhandler(500)
 def internal_error(e):
     return jsonify(error=str(e)), 500
@@ -24,9 +28,13 @@ def hello():
 def class_size():
     if request.method == 'POST':
         try:
-            response = jsonify(returnClassSize(request.json)), 200
-            return response
+            json_file = request.json
+            try:
+                response = jsonify(returnClassSize(json_file)), 200
+                return response
+            except Exception as e:
+                return jsonify({"error": "500 Internal Error: " + str(e)}), 500
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"error": str(e)}), 415
     else:
         return jsonify({"error": "405: Method not allowed"}), 405
