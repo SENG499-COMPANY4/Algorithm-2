@@ -62,7 +62,7 @@ class api_tests(unittest.TestCase):
         self.assertEqual(response.status_code, 500)
         self.assertEqual(
             response.data,
-            b'{"error":"500 Internal Error: string indices must be integers"}\n'
+            b'{"error":"500 Internal Error: string indices must be integers, not \'str\'"}\n'
         )
 
     def test_post_incorrect_file(self):
@@ -71,7 +71,7 @@ class api_tests(unittest.TestCase):
         self.assertEqual(response.status_code, 500)
         self.assertEqual(
             response.data,
-            b'{"error":"500 Internal Error: string indices must be integers"}\n'
+            b'{"error":"500 Internal Error: string indices must be integers, not \'str\'"}\n'
         )
 
 if __name__ == "__main__":
