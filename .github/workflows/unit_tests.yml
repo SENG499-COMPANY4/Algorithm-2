@@ -32,3 +32,5 @@ jobs:
       - name: Run unit tests
         run: |
           python test_endpoint.py
+          python test_errors.py
+          python test_regression.py
