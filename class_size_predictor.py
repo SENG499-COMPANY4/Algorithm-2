@@ -49,6 +49,9 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     df['term'] = df['term'].astype(int)
     df['semester'] = pd.to_datetime(df['year'].astype(str) + '-' + df['term'].astype(str), format='%Y-%m').dt.strftime('%Y-%m')
 
+    # Create list of unique terms
+    unique_terms = df['term'].unique()
+    
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
 
@@ -107,7 +110,12 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 
         # Save the average to the DataFrame
         predictions_df.loc[predictions_df['semester'] == semester, 'size'] = int(average)
+        # Set term column to month of semester
+        predictions_df['term'] = pd.to_datetime(predictions_df['semester']).dt.month.astype(int)
     
+    # Remove any rows where the term is not in unique_terms
+    predictions_df = predictions_df[predictions_df['term'].isin(unique_terms)]
+
     # Return the predicted sizes for the given semesters_to_predict 
     return predictions_df
 
@@ -117,9 +125,10 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 def convertToJSON(predictions_df, course):
     # Create a list of JSON objects
     predictions_json = []
+    predictions_df = predictions_df.reset_index(drop=True)
     for i in range(predictions_df.shape[0]):
         # Create a JSON object for the current row
-        prediction_json = {'course': course, 'size': int(predictions_df.loc[i, 'size']), 'term': int(predictions_df.loc[i, 'semester'].split('-')[1])}
+        prediction_json = {'course': course, 'size': int(predictions_df.loc[i, 'size']), 'term': int(predictions_df.loc[i, 'term'])}
         # Append the JSON object to the list
         predictions_json.append(prediction_json)
     
