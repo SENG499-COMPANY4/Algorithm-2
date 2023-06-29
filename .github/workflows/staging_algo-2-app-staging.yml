@@ -29,9 +29,13 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-      
+
+      - name: Run unit tests
+        run: |
+          python test_endpoint.py
+          python test_errors.py
+          python test_regression.py
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
         with:
@@ -61,3 +65,14 @@ jobs:
           app-name: 'algo-2-app-staging'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9568D2961FBB4359AFA6FD7243DF520A }}
+
+      - name: Run integration tests
+        run: |
+          python test_integration.py
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          SCOPE: ${{ secrets.SCOPE }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
