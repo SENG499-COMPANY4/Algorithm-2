@@ -1,3 +1,5 @@
+[![Build and deploy Python app to Azure Web App - algo-2-app-staging](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/staging_algo-2-app-staging.yml/badge.svg?branch=staging)](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/staging_algo-2-app-staging.yml)
+
 # README for Running Algo 2 Flask Application Locally
 
 This README provides instructions on how to run the Algo2 Flask application locally on your machine. The Algo2 Flask application is a service that predicts the class sizes for the next year of the Software Engineering Uvic course by analyzing previous class size trends. It does this by using the SARIMA time series analysis model.
