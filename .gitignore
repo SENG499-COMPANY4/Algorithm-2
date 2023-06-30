@@ -138,4 +138,4 @@ logs/
 # runtime data
 tmp/
 
-test_with_env.sh/
+test_with_env.sh
