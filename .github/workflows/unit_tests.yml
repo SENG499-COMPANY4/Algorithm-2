@@ -8,6 +8,7 @@ on:
   push:
     branches-ignore:
       - master
+      - staging
 
 jobs:
   build:
@@ -33,3 +34,4 @@ jobs:
         run: |
           python test_endpoint.py
           python test_errors.py
+          python test_regression.py
