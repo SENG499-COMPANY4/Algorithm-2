@@ -1,11 +1,7 @@
 [{
-    "prereq": [
-      "csc110",
-      "csc111"
-    ],
-    "coreq": [
-    ],
-    "pastEnrol": [
+    "Term" : [5, 9, 1],
+    "Year" : 2024,
+    "pastEnrollment": [
       {
           "year": 2017,
           "term": 5,
