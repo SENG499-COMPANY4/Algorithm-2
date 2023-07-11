@@ -49,6 +49,9 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     df['term'] = df['term'].astype(int)
     df['semester'] = pd.to_datetime(df['year'].astype(str) + '-' + df['term'].astype(str), format='%Y-%m').dt.strftime('%Y-%m')
 
+    # Sort the DataFrame by 'semester' column and reset the index
+    df.sort_values('semester', inplace=True)
+
     # Create list of unique terms
     unique_terms = df['term'].unique()
     
@@ -161,3 +164,4 @@ def returnClassSize(data_from_post):
         predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
         predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
+
