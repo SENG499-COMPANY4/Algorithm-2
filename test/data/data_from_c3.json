@@ -1,0 +1,773 @@
+[
+    {
+        "course": "CSC 111",
+        "Term": [9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 346
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 292
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 134
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 220
+            }
+        ]
+    },
+    {
+        "course": "CSC 115",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 130
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 86
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 159
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 91
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 355
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 238
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 186
+            }
+        ]
+    },
+    {
+        "course": "CSC 225",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 197
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 63
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 197
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 58
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 147
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 158
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 107
+            }
+        ]
+    },
+    {
+        "course": "CSC 226",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 87
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 91
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 96
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 74
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 166
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 140
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 117
+            }
+        ]
+    },
+    {
+        "course": "CSC 230",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 149
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 53
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 128
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 46
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 133
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 136
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 101
+            }
+        ]
+    },
+    {
+        "course": "CSC 320",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 166
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 123
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 47
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 120
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 187
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 118
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 133
+            }
+        ]
+    },
+    {
+        "course": "CSC 355",
+        "Term": [9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 130
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 110
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 116
+            }
+        ]
+    },
+    {
+        "course": "CSC 360",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 142
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 144
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 69
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 95
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 102
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 84
+            }
+        ]
+    },
+    {
+        "course": "CSC 361",
+        "Term": [9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 144
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 71
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 52
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 88
+            }
+        ]
+    },
+    {
+        "course": "CSC 370",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 135
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 78
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 157
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 85
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 116
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 110
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 96
+            }
+        ]
+    },
+    {
+        "course": "ECE 255",
+        "Term": [9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 83
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 127
+            }
+        ]
+    },
+    {
+        "course": "ECE 260",
+        "Term": [5, 9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 122
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 111
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 117
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 68
+            }
+        ]
+    },
+    {
+        "course": "ECE 310",
+        "Term": [5, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 33
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 26
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 138
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 128
+            }
+        ]
+    },
+    {
+        "course": "ECE 355",
+        "Term": [9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 150
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 145
+            }
+        ]
+    },
+    {
+        "course": "ECE 360",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 101
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 78
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 65
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 91
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 82
+            }
+        ]
+    },
+    {
+        "course": "SENG 265",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 199
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 84
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 198
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 67
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 162
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 143
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 99
+            }
+        ]
+    },
+    {
+        "course": "SENG 275",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 748
+            },
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 69
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 35
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 63
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 113
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 73
+            }
+        ]
+    },
+    {
+        "course": "SENG 310",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 118
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 76
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 121
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 92
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 76
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 88
+            }
+        ]
+    },
+    {
+        "course": "SENG 321",
+        "Term": [5, 9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 54
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 67
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 58
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 70
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 76
+            }
+        ]
+    },
+    {
+        "course": "SENG 350",
+        "Term": [9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 53
+            },
+            {
+                "year": 2022,
+                "term": 9,
+                "size": 71
+            }
+        ]
+    },
+    {
+        "course": "SENG 360",
+        "Term": [9],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 9,
+                "size": 112
+            }
+        ]
+    },
+    {
+        "course": "SENG 426",
+        "Term": [5],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 60
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 81
+            }
+        ]
+    },
+    {
+        "course": "SENG 440",
+        "Term": [5],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 70
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 94
+            }
+        ]
+    },
+    {
+        "course": "SENG 499",
+        "Term": [5],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2019,
+                "term": 5,
+                "size": 39
+            },
+            {
+                "year": 2022,
+                "term": 5,
+                "size": 77
+            }
+        ]
+    },
+    {
+        "course": "ECE 455",
+        "Term": [1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 95
+            }
+        ]
+    },
+    {
+        "course": "ECE 458",
+        "Term": [1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 105
+            }
+        ]
+    },
+    {
+        "course": "SENG 371",
+        "Term": [9, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 81
+            },
+            {
+                "year": 2023,
+                "term": 9,
+                "size": 81
+            }
+        ]
+    },
+    {
+        "course": "SENG 401",
+        "Term": [5, 1],
+        "Year": 2024,
+        "pastEnrollment": [
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 62
+            },
+            {
+                "year": 2023,
+                "term": 5,
+                "size": 63
+            }
+        ]
+    }
+]
