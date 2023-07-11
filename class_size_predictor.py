@@ -54,9 +54,6 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 
     # Create list of unique terms
     unique_terms = df['term'].unique()
-    
-    # Sort the DataFrame by 'semester' column
-    df.sort_values('semester', inplace=True)
 
     # Add a semseter on the end of semesters_to_predict to predict the next term
     semesters_to_predict.append((pd.to_datetime(semesters_to_predict[-1], format='%Y-%m') + pd.DateOffset(months=4)).strftime('%Y-%m'))
@@ -72,6 +69,9 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 
     # Concatenate the next_terms_df to the df
     df = pd.concat([df, next_terms_df], ignore_index=True)
+
+    # Sort the DataFrame by 'semester' column
+    df.sort_values('semester', inplace=True)
 
     # Fill gaps between terms in the DataFrame
     df = fillGaps(df)
@@ -164,4 +164,3 @@ def returnClassSize(data_from_post):
         predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
         predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
-
