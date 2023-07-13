@@ -139,3 +139,4 @@ logs/
 tmp/
 
 test_with_env.sh
+prod.env
