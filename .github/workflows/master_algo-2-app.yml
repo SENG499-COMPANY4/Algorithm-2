@@ -67,3 +67,16 @@ jobs:
           app-name: 'algo-2-app'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E7CF4BBE00D546A38100A6B780B4F113 }}
+      - name : 'Run smoke tests'
+        run: |
+          python test_smoke.py
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          SCOPE: ${{ secrets.SCOPE }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          BACKEND_USERNAME: ${{ secrets.BACKEND_USERNAME }}
+          BACKEND_PASSWORD: ${{ secrets.BACKEND_PASSWORD }}
+          BACKEND3_USERNAME: ${{ secrets.BACKEND3_USERNAME }}
+          BACKEND3_PASSWORD: ${{ secrets.BACKEND3_PASSWORD }}
