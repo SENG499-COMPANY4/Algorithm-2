@@ -1,14 +1,9 @@
 [{
 
     "course": "engr120",
-    "prereq": [
-        "engr110"
-    ],
-    "coreq": [
-        "csc110",
-        "csc111"
-    ],
-    "pastEnrol": [
+    "Term" : [1],
+    "Year" : 2024,
+    "pastEnrollment": [
         {
             "year": 2017,
             "term": 1,

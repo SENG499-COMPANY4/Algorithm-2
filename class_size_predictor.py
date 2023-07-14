@@ -40,7 +40,7 @@ def fillGaps(df):
 def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 
     # Extract past enrollment data
-    pastEnrollmentData = data["pastEnrol"]
+    pastEnrollmentData = data["pastEnrollment"]
 
     # Create a DataFrame from the JSON data
     df = pd.DataFrame(pastEnrollmentData)
@@ -134,10 +134,30 @@ def convertToJSON(predictions_df, course):
     
     return predictions_json
 
+def semestersToPredict(course):
+    semesters_to_predict = []
+
+    # Get the terms for a given course from the course JSON data
+    terms = course['Term']
+    # Convert terms from 1 to 01, 2 to 02, etc.
+    terms = [f'0{term}' if term < 10 else f'{term}' for term in terms]
+    
+    # Get the year for the given course from the JSON data
+    year = int(course['Year'])
+
+    # Create the semesters_to_predict list using terms and year
+    for term in terms:
+        if term == '01':
+            semesters_to_predict.append(f'{year + 1}-{term}')
+        else:
+            semesters_to_predict.append(f'{year}-{term}')
+
+    return semesters_to_predict
+
 def returnClassSize(data_from_post):
-    semesters_to_predict = ['2024-05', '2024-09', '2025-01']
     predictions_json = []
     for course in data_from_post:
-        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 0))
+        semesters_to_predict = semestersToPredict(course)
+        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
         predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
