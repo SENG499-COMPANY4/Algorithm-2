@@ -1,3 +1,4 @@
+[![Build and deploy Python app to Azure Web App - algo-2-app](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/master_algo-2-app.yml/badge.svg?branch=master)](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/master_algo-2-app.yml)
 [![Build and deploy Python app to Azure Web App - algo-2-app-staging](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/staging_algo-2-app-staging.yml/badge.svg?branch=staging)](https://github.com/SENG499-COMPANY4/Algorithm-2/actions/workflows/staging_algo-2-app-staging.yml)
 
 # README for Running Algo 2 Flask Application Locally
