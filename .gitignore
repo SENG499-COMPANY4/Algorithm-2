@@ -138,5 +138,7 @@ logs/
 # runtime data
 tmp/
 
-test_with_env.sh
+test_integration_with_env.sh
+test_smoke_with_env.sh
+.env
 prod.env
