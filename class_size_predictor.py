@@ -6,11 +6,57 @@ import json
 
 # Fill gaps between terms in the DataFrame
 def fillGaps(df):
+    """
+        FOR RILEY
+    """
+    # If one row, add 11 months after the semester
+    if df.shape[0] == 1:
+        # Get the current semester
+        current_semester = df['semester'].iloc[0]
+        # Add 11 months after the current semester
+        semesters_to_fill = pd.date_range(start=current_semester, periods=12, freq='1M')[1:]
+        
+        # Get size and term of current_semester
+        size = df['size'].iloc[0]
+        term = df['term'].iloc[0]
+
+        # Create a DataFrame with the filled semesters (year, term, size, semester)
+        filled_df = pd.DataFrame({'year': semesters_to_fill.strftime('%Y'),
+                                    'term': term,
+                                    'semester': semesters_to_fill.strftime('%Y-%m'), 
+                                    'size': size})
+        
+        # Append the filled DataFrame to the original DataFrame if not empty
+        if filled_df.shape[0] > 0:
+            df = pd.concat([df, filled_df], ignore_index=True)
+
+            # Sort the DataFrame by 'semester' column
+            df.sort_values('semester', inplace=True)
+
+            # Reset the index to normalize the order
+            df.reset_index(drop=True, inplace=True)
+            return df
+
+    """
+        END
+    """
+
     # Add data points between each term (e.g. between 2019-09 and 2020-01, add 2019-10, 2019-11, 2019-12)
     for i in range(df.shape[0] - 1):
         # Get the current semester and the next semester
         current_semester = df['semester'].iloc[i]
         next_semester = df['semester'].iloc[i + 1]
+        
+        year_1 = int(current_semester.split('-')[0])
+        year_2 = int(next_semester.split('-')[0])
+        month_1 = int(current_semester.split('-')[1])
+        month_2 = int(next_semester.split('-')[1])
+        # Get the difference in months between the current semester and the next semester
+        difference = (year_2 - year_1) * 12 + (month_2 - month_1)
+        
+        # If the difference is not 4 months, then add the missing months
+        if difference > 4:
+            continue
 
         # Add data points between the current semester and the next semester
         semesters_to_fill = pd.date_range(start=current_semester, end=next_semester, freq='1M')[1:]
@@ -66,20 +112,18 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     next_terms_df['year'] = next_terms_df['semester'].dt.year
     next_terms_df['size'] = 0
     next_terms_df['semester'] = next_terms_df['semester'].dt.strftime('%Y-%m')
-
-    # Concatenate the next_terms_df to the df
-    df = pd.concat([df, next_terms_df], ignore_index=True)
+    next_terms_df = fillGaps(next_terms_df)
 
     # Sort the DataFrame by 'semester' column
     df.sort_values('semester', inplace=True)
 
     # Fill gaps between terms in the DataFrame
     df = fillGaps(df)
-
+    df.to_csv('df.csv')
     # Create monthly trend indicators as exogenous variables
     df['month'] = pd.to_datetime(df['semester']).dt.month
     exog = pd.get_dummies(df['month'], prefix='month', drop_first=True)
-
+    df.to_csv('df.csv')
     # Create a SARIMAX time series model with exogenous variables
     trend = 'n'
     endog = df['size']
@@ -87,29 +131,29 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     res = res.fit(disp=False, maxiter=1000)
 
     # Get the start and end dates indexes in df for prediction
-    start_index = df[df['semester'] == semesters_to_predict[0]].index[0]
-    end_index = df[df['semester'] == semesters_to_predict[-1]].index[0]
+    start_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[0]].index[0]
+    end_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[-1]].index[0]
 
     # Predict the class size for the terms in next_terms_df
     predicted_values = res.predict(start=start_index, end=end_index, exog=exog[start_index:end_index+1])
     
     # Add the predicted values to the DataFrame
-    df.loc[start_index:end_index, 'size'] = predicted_values
+    next_terms_df.loc[start_index:end_index, 'size'] = predicted_values
 
     # Create a DataFrame to hold the final predictions
     predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': 0})
     # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
     for semester in semesters_to_predict[:-1]:
         # Get the index of the given semester
-        index = df[df['semester'] == semester].index[0]
+        index = next_terms_df[next_terms_df['semester'] == semester].index[0]
         
-        if int(df.loc[index, 'size']) == 0:
-            average = df.loc[index+1:index+3, 'size'].mean()
-        elif index == df.shape[0] - 1:
-            average = df.loc[index, 'size']
+        if int(next_terms_df.loc[index, 'size']) == 0:
+            average = next_terms_df.loc[index+1:index+3, 'size'].mean()
+        elif index == next_terms_df.shape[0] - 1:
+            average = next_terms_df.loc[index, 'size']
         else:
             # Get the average of the predicted values on that semester
-            average = df.loc[index:index+3, 'size'].mean()
+            average = next_terms_df.loc[index:index+3, 'size'].mean()
 
         # Save the average to the DataFrame
         predictions_df.loc[predictions_df['semester'] == semester, 'size'] = int(average)
@@ -159,8 +203,13 @@ def semestersToPredict(course):
 
 def returnClassSize(data_from_post):
     predictions_json = []
+
     for course in data_from_post:
-        semesters_to_predict = semestersToPredict(course)
-        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
-        predictions_json += convertToJSON(predictions, course['course'])
+            semesters_to_predict = semestersToPredict(course)
+            predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
+            predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
+
+with open('test/data/one_class_skip_a_year.json') as f:
+    data = json.load(f)
+    print(returnClassSize(data))
