@@ -41,6 +41,30 @@ def fillGaps(df):
         END
     """
 
+    # If there is only one unique term, then add 11 months after each semester
+    if df['term'].nunique() == 1:
+        for i in range(df.shape[0]):
+            # Get the current semester
+            current_semester = df['semester'].iloc[i]
+            # Add 11 months after the current semester
+            semesters_to_fill = pd.date_range(start=current_semester, periods=12, freq='1M')[1:]
+            
+            # Get size and term of current_semester
+            size = df['size'].iloc[i]
+            term = df['term'].iloc[i]
+
+            # Create a DataFrame with the filled semesters (year, term, size, semester)
+            filled_df = pd.DataFrame({'year': semesters_to_fill.strftime('%Y'),
+                                        'term': term,
+                                        'semester': semesters_to_fill.strftime('%Y-%m'), 
+                                        'size': size})
+            
+            # Append the filled DataFrame to the original DataFrame if not empty
+            if filled_df.shape[0] > 0:
+                df = pd.concat([df, filled_df], ignore_index=True)
+        
+        return df
+
     # Add data points between each term (e.g. between 2019-09 and 2020-01, add 2019-10, 2019-11, 2019-12)
     for i in range(df.shape[0] - 1):
         # Get the current semester and the next semester
@@ -110,7 +134,7 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     # Set term column to month of semester
     next_terms_df['term'] = next_terms_df['semester'].dt.month
     next_terms_df['year'] = next_terms_df['semester'].dt.year
-    next_terms_df['size'] = 0
+    next_terms_df['size'] = None
     next_terms_df['semester'] = next_terms_df['semester'].dt.strftime('%Y-%m')
     next_terms_df = fillGaps(next_terms_df)
 
@@ -119,11 +143,11 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
 
     # Fill gaps between terms in the DataFrame
     df = fillGaps(df)
-    df.to_csv('df.csv')
+
     # Create monthly trend indicators as exogenous variables
     df['month'] = pd.to_datetime(df['semester']).dt.month
-    exog = pd.get_dummies(df['month'], prefix='month', drop_first=True)
-    df.to_csv('df.csv')
+    exog = pd.get_dummies(df['month'], prefix='month')
+
     # Create a SARIMAX time series model with exogenous variables
     trend = 'n'
     endog = df['size']
@@ -133,15 +157,15 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     # Get the start and end dates indexes in df for prediction
     start_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[0]].index[0]
     end_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[-1]].index[0]
-
+    
     # Predict the class size for the terms in next_terms_df
     predicted_values = res.predict(start=start_index, end=end_index, exog=exog[start_index:end_index+1])
     
     # Add the predicted values to the DataFrame
     next_terms_df.loc[start_index:end_index, 'size'] = predicted_values
-
+    
     # Create a DataFrame to hold the final predictions
-    predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': 0})
+    predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': None})
     # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
     for semester in semesters_to_predict[:-1]:
         # Get the index of the given semester
@@ -210,6 +234,3 @@ def returnClassSize(data_from_post):
             predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
 
-with open('test/data/one_class_skip_a_year.json') as f:
-    data = json.load(f)
-    print(returnClassSize(data))
