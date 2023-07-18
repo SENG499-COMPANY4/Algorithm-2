@@ -1,4 +1,4 @@
-from app import app
+from setup import app
 import json
 import unittest
 
@@ -15,7 +15,7 @@ class api_tests(unittest.TestCase):
     #   Spring:   352, 357, 299, 312, 316, 353
     def test_one_class_results(self):
         print("Testing predictor with one class")
-        f = open("test/data/one_class.json")
+        f = open("data/one_class.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -52,7 +52,7 @@ class api_tests(unittest.TestCase):
     #   Spring:   none
     def test_one_class_with_one_pastEnrol_results(self):
         print("Testing predictor with one class with only one past enrollment entry")
-        f = open("test/data/one_class_one_pastEnrol.json")
+        f = open("data/one_class_one_pastEnrol.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -77,7 +77,7 @@ class api_tests(unittest.TestCase):
     #   Spring:   393, 393, 354, 356, 319, 346, 338
     def test_one_class_with_only_spring_sem_results(self):
         print("Testing predictor with one class that is only offered in one semester")
-        f = open("test/data/one_class_only_spring_sem.json")
+        f = open("data/one_class_only_spring_sem.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -98,7 +98,7 @@ class api_tests(unittest.TestCase):
     
     def test_one_class_skip_a_year(self):
         print("Testing predictor with one class that is missing a year's information")
-        f = open("test/data/one_class_skip_a_year.json")
+        f = open("data/one_class_skip_a_year.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -131,7 +131,7 @@ class api_tests(unittest.TestCase):
     
     def test_two_classes(self):
         print("Testing predictor with two classes")
-        f = open("test/data/two_classes.json")
+        f = open("data/two_classes.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
