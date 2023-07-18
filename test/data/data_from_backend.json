@@ -1,0 +1,206 @@
+[
+    {
+      "course": "CSC 111",
+      "Term" : [9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 475,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 138,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "CSC 115",
+      "Term" : [5, 1, 9],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 176,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 78,
+          "term": 5,
+          "year": 2022
+        },
+        {
+          "size": 364,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "ENGR 110",
+      "Term" : [9],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 720,
+          "term": 9,
+          "year": 2022
+        }
+      ]
+    },
+    {
+      "course": "ENGR 120",
+      "Term" : [1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 840,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "ENGR 130",
+      "Term" : [9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 560,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 70,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "ENGR 141",
+      "Term" : [5, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 70,
+          "term": 5,
+          "year": 2022
+        },
+        {
+          "size": 420,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "MATH 100",
+      "Term" : [9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 750,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 172,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "MATH 101",
+      "Term" : [5, 9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 180,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 197,
+          "term": 5,
+          "year": 2022
+        },
+        {
+          "size": 1051,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "MATH 109",
+      "Term" : [5, 9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 750,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 75,
+          "term": 5,
+          "year": 2022
+        },
+        {
+          "size": 195,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "MATH 110",
+      "Term" : [9],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 471,
+          "term": 9,
+          "year": 2022
+        }
+      ]
+    },
+    {
+      "course": "PHYS 110",
+      "Term" : [9, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 768,
+          "term": 9,
+          "year": 2022
+        },
+        {
+          "size": 220,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    },
+    {
+      "course": "PHYS 111",
+      "Term" : [5, 1],
+      "Year" : 2024,
+      "pastEnrollment": [
+        {
+          "size": 120,
+          "term": 5,
+          "year": 2022
+        },
+        {
+          "size": 610,
+          "term": 1,
+          "year": 2023
+        }
+      ]
+    }
+]

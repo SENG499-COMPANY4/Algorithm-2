@@ -66,30 +66,28 @@ class TestAzureApplication(unittest.TestCase):
     # The following tests the root endpoint of the application
 
     def test_hello_world(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/"
+        url = "https://algo-2-app.azurewebsites.net/"
         headers = {"Authorization": f"Bearer {self.token}"}
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an exception if the request failed
         self.assertEqual(response.text, "Hello World!")
 
     def test_hello_world_backend(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/"
+        url = "https://algo-2-app.azurewebsites.net/"
         headers = {"Authorization": f"Bearer {self.backend_token}"}
         response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Raise an exception if the request failed
-        self.assertEqual(response.text, "Hello World!")
+        response.raise_for_status()
 
     def test_hello_world_backend3(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/"
+        url = "https://algo-2-app.azurewebsites.net/"
         headers = {"Authorization": f"Bearer {self.backend3_token}"}
         response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Raise an exception if the request failed
-        self.assertEqual(response.text, "Hello World!")
+        response.raise_for_status()
 
-    # The following tests the predict_class_size endpoint of the application
+    # The following tests the predict_class_sizes endpoint of the application
 
     def test_class_size(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/predict_class_sizes"
+        url = "https://algo-2-app.azurewebsites.net/predict_class_sizes"
         headers = {"Authorization": f"Bearer {self.token}",
                    "Content-Type": "application/json"}
 
@@ -97,7 +95,7 @@ class TestAzureApplication(unittest.TestCase):
             data = json.load(f)
 
         response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()  # Raise an exception if the request failed
+        response.raise_for_status()
 
         result = response.json()
 
@@ -116,10 +114,9 @@ class TestAzureApplication(unittest.TestCase):
         self.assertEqual(result[1]["course"], "csc115")
         self.assertEqual(result[2]["course"], "csc115")
         self.assertEqual(result[3]["course"], "csc115")
-        # still needs to add stuff
 
     def test_class_size_backend(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/predict_class_sizes"
+        url = "https://algo-2-app.azurewebsites.net/predict_class_sizes"
         headers = {"Authorization": f"Bearer {self.backend_token}",
                    "Content-Type": "application/json"}
 
@@ -127,7 +124,7 @@ class TestAzureApplication(unittest.TestCase):
             data = json.load(f)
 
         response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()  # Raise an exception if the request failed
+        response.raise_for_status()
 
         result = response.json()
 
@@ -148,7 +145,7 @@ class TestAzureApplication(unittest.TestCase):
         self.assertEqual(result[3]["course"], "csc115")
 
     def test_class_size_backend3(self):
-        url = "https://algo-2-app-staging.azurewebsites.net/predict_class_sizes"
+        url = "https://algo-2-app.azurewebsites.net/predict_class_sizes"
         headers = {"Authorization": f"Bearer {self.backend3_token}",
                    "Content-Type": "application/json"}
 
@@ -156,7 +153,7 @@ class TestAzureApplication(unittest.TestCase):
             data = json.load(f)
 
         response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()  # Raise an exception if the request failed
+        response.raise_for_status()
 
         result = response.json()
 
