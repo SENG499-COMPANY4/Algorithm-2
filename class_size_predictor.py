@@ -242,7 +242,3 @@ def returnClassSize(data_from_post):
             predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
             predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
-
-with open('test\data\one_class_only_spring_sem.json') as f:
-    data = json.load(f)
-    print(returnClassSize(data))
