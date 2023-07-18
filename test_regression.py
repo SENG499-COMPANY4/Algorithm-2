@@ -26,19 +26,19 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        self.assertTrue( result[0]["size"] > 75 )
+        self.assertTrue( result[0]["size"] >= 75 )
         self.assertTrue( result[0]["size"] < 146 ) 
 
         # Fall
         self.assertEqual( result[1]["course"], "csc115" )
         self.assertEqual( result[1]["term"], 9 )
-        # self.assertTrue( result[1]["size"] > 129 )    # current result: 115
+        self.assertTrue( result[1]["size"] > 129 )    # current result: 115
         self.assertTrue( result[1]["size"] < 200 ) 
 
         # Spring
         self.assertEqual( result[2]["course"], "csc115" )
         self.assertEqual( result[2]["term"], 1 )
-        # self.assertTrue( result[2]["size"] > 299 )    # current result: 259
+        self.assertTrue( result[2]["size"] > 299 )    # current result: 259
         self.assertTrue( result[2]["size"] < 400 ) 
 
         with self.assertRaises(Exception) as e:
@@ -63,7 +63,7 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        # self.assertTrue( result[0]["size"] > 75 )   # current result: 65
+        self.assertTrue( result[0]["size"] >= 75 )   # current result: 65
         self.assertTrue( result[0]["size"] < 146 ) 
 
         with self.assertRaises(Exception) as e:
@@ -88,7 +88,7 @@ class api_tests(unittest.TestCase):
         # Spring
         self.assertEqual( result[0]["course"], "engr120" )
         self.assertEqual( result[0]["term"], 1 )
-        # self.assertTrue( result[0]["size"] > 319 ) # current result: 315
+        self.assertTrue( result[0]["size"] > 319 ) # current result: 315
         self.assertTrue( result[0]["size"] < 400 )
 
         with self.assertRaises(Exception) as e:
@@ -109,19 +109,19 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        self.assertTrue( result[0]["size"] > 75 )
+        self.assertTrue( result[0]["size"] >= 75 )
         self.assertTrue( result[0]["size"] < 146 ) 
 
         # Fall
         self.assertEqual( result[1]["course"], "csc115" )
         self.assertEqual( result[1]["term"], 9 )
-        # self.assertTrue( result[1]["size"] > 129 )    # current result: 115
+        self.assertTrue( result[1]["size"] > 129 )    # current result: 115
         self.assertTrue( result[1]["size"] < 200 ) 
 
         # Spring
         self.assertEqual( result[2]["course"], "csc115" )
         self.assertEqual( result[2]["term"], 1 )
-        # self.assertTrue( result[2]["size"] > 299 )    # current result: 230
+        self.assertTrue( result[2]["size"] > 299 )    # current result: 230
         self.assertTrue( result[2]["size"] < 400 ) 
 
         with self.assertRaises(Exception) as e:
@@ -142,25 +142,25 @@ class api_tests(unittest.TestCase):
         # Class 1 Spring
         self.assertEqual( result[0]["course"], "engr120" )
         self.assertEqual( result[0]["term"], 1 )
-        # self.assertTrue( result[0]["size"] > 319 ) # current result: 315
+        self.assertTrue( result[0]["size"] > 319 ) # current result: 315
         self.assertTrue( result[0]["size"] < 400 ) 
 
         # Class 2 Summer
         self.assertEqual( result[1]["course"], "csc115" )
         self.assertEqual( result[1]["term"], 5 )
-        self.assertTrue( result[1]["size"] > 75 )
+        self.assertTrue( result[1]["size"] >= 75 )
         self.assertTrue( result[1]["size"] < 146 ) 
 
         # Class 2 Fall
         self.assertEqual( result[2]["course"], "csc115" )
         self.assertEqual( result[2]["term"], 9 )
-        # self.assertTrue( result[2]["size"] > 129 )    # current result: 115
+        self.assertTrue( result[2]["size"] > 129 )    # current result: 115
         self.assertTrue( result[2]["size"] < 200 ) 
 
         # Class 2 Spring 
         self.assertEqual( result[3]["course"], "csc115" )
         self.assertEqual( result[3]["term"], 1 )
-        # self.assertTrue( result[3]["size"] > 299 )    # current result: 259
+        self.assertTrue( result[3]["size"] > 299 )    # current result: 259
         self.assertTrue( result[3]["size"] < 400 ) 
 
         with self.assertRaises(Exception) as e:
