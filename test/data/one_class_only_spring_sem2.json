@@ -1,0 +1,43 @@
+[{
+    "course": "engr120",
+    "Term" : [9, 1],
+    "Year" : 2024,
+    "pastEnrollment": [
+        {
+            "year": 2017,
+            "term": 1,
+            "size": 393
+        },
+        {
+            "year": 2018,
+            "term": 1,
+            "size": 393
+        },
+        {
+            "year": 2019,
+            "term": 1,
+            "size": 354
+        },
+        {
+            "year": 2020,
+            "term": 1,
+            "size": 356
+        },
+        {
+            "year": 2021,
+            "term": 1,
+            "size": 319
+        },
+        {
+            "year": 2022,
+            "term": 1,
+            "size": 346
+        },
+        {
+            "year": 2023,
+            "term": 1,
+            "size": 338
+        }
+    ]
+}]
+
