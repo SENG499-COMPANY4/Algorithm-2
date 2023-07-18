@@ -1,4 +1,4 @@
-from ..app import app
+from setup import app
 import json
 import unittest
 
