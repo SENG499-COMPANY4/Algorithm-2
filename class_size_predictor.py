@@ -157,7 +157,7 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     # Get the start and end dates indexes in df for prediction
     start_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[0]].index[0]
     end_index = next_terms_df[next_terms_df['semester'] == semesters_to_predict[-1]].index[0]
-    
+
     # Predict the class size for the terms in next_terms_df
     predicted_values = res.predict(start=start_index, end=end_index, exog=exog[start_index:end_index+1])
     
@@ -166,6 +166,7 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     
     # Create a DataFrame to hold the final predictions
     predictions_df = pd.DataFrame({'semester': semesters_to_predict[:-1], 'size': None})
+
     # Set the size for the given semesters_to_predict using the average of the predicted values on that semester (e.g. 2020-01, 2020-02, 2020-03, 2020-04)
     for semester in semesters_to_predict[:-1]:
         # Get the index of the given semester
@@ -185,7 +186,7 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
         predictions_df['term'] = pd.to_datetime(predictions_df['semester']).dt.month.astype(int)
     
     # Remove any rows where the term is not in unique_terms
-    predictions_df = predictions_df[predictions_df['term'].isin(unique_terms)]
+    predictions_df = predictions_df[predictions_df['semester'].isin(semesters_to_predict[:-1])]
 
     # Return the predicted sizes for the given semesters_to_predict 
     return predictions_df
@@ -205,11 +206,19 @@ def convertToJSON(predictions_df, course):
     
     return predictions_json
 
+def custom_sort_key(element):
+    order = {5: 0, 9: 1, 1: 2}  # Define the desired order
+    return order.get(element, float('inf'))
+
 def semestersToPredict(course):
     semesters_to_predict = []
 
     # Get the terms for a given course from the course JSON data
     terms = course['Term']
+
+    # Sort terms to be in [5, 9, 1]
+    terms.sort(key=custom_sort_key)
+
     # Convert terms from 1 to 01, 2 to 02, etc.
     terms = [f'0{term}' if term < 10 else f'{term}' for term in terms]
     
@@ -234,3 +243,6 @@ def returnClassSize(data_from_post):
             predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
 
+with open('test\data\one_class_only_spring_sem.json') as f:
+    data = json.load(f)
+    print(returnClassSize(data))

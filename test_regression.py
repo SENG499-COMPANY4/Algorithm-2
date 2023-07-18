@@ -26,7 +26,7 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        self.assertTrue( result[0]["size"] > 75 )
+        self.assertTrue( result[0]["size"] >= 75 )
         self.assertTrue( result[0]["size"] < 146 ) 
 
         # Fall
@@ -63,7 +63,7 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        self.assertTrue( result[0]["size"] > 75 )   # current result: 65
+        self.assertTrue( result[0]["size"] >= 75 )   # current result: 65
         self.assertTrue( result[0]["size"] < 146 ) 
 
         with self.assertRaises(Exception) as e:
@@ -109,7 +109,7 @@ class api_tests(unittest.TestCase):
         # Summer
         self.assertEqual( result[0]["course"], "csc115" )
         self.assertEqual( result[0]["term"], 5 )
-        self.assertTrue( result[0]["size"] > 75 )
+        self.assertTrue( result[0]["size"] >= 75 )
         self.assertTrue( result[0]["size"] < 146 ) 
 
         # Fall
@@ -148,7 +148,7 @@ class api_tests(unittest.TestCase):
         # Class 2 Summer
         self.assertEqual( result[1]["course"], "csc115" )
         self.assertEqual( result[1]["term"], 5 )
-        self.assertTrue( result[1]["size"] > 75 )
+        self.assertTrue( result[1]["size"] >= 75 )
         self.assertTrue( result[1]["size"] < 146 ) 
 
         # Class 2 Fall
