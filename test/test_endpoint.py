@@ -22,7 +22,7 @@ class api_tests(unittest.TestCase):
     
     def test_predictor_one_class(self):
         print("testing predictor with one class")
-        f = open("data/one_class.json")
+        f = open("test/data/one_class.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -31,7 +31,7 @@ class api_tests(unittest.TestCase):
 
     def test_predictor_two_class(self):
         print("testing predictor with two classes")
-        f = open("data/two_classes.json")
+        f = open("test/data/two_classes.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)
@@ -40,7 +40,7 @@ class api_tests(unittest.TestCase):
 
     def test_predictor_one_class_only_spring(self):
         print("testing predictor with one class and only enrolment data for spring")
-        f = open("data/one_class_only_spring_sem.json")
+        f = open("test/data/one_class_only_spring_sem.json")
         d = json.load(f)
         f.close()
         response = self.app.post("/predict_class_sizes",json=d)

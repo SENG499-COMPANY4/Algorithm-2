@@ -93,7 +93,7 @@ class TestAzureApplication(unittest.TestCase):
         headers = {"Authorization": f"Bearer {self.token}",
                    "Content-Type": "application/json"}
 
-        with open("./data/two_classes.json") as f:
+        with open("./test/data/two_classes.json") as f:
             data = json.load(f)
 
         response = requests.post(url, headers=headers, json=data)
@@ -123,7 +123,7 @@ class TestAzureApplication(unittest.TestCase):
         headers = {"Authorization": f"Bearer {self.backend_token}",
                    "Content-Type": "application/json"}
 
-        with open("./data/two_classes.json") as f:
+        with open("./test/data/two_classes.json") as f:
             data = json.load(f)
 
         response = requests.post(url, headers=headers, json=data)
