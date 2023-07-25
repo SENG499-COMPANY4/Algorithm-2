@@ -34,9 +34,9 @@ jobs:
 
       - name: Run unit tests
         run: |
-          python test_endpoint.py
-          python test_errors.py
-          python test_regression.py
+          python test/test_endpoint.py
+          python test/test_errors.py
+          python test/test_regression.py
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
@@ -69,7 +69,7 @@ jobs:
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E7CF4BBE00D546A38100A6B780B4F113 }}
       - name : 'Run smoke tests'
         run: |
-          python test_smoke.py
+          python test/test_smoke.py
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           SCOPE: ${{ secrets.SCOPE }}

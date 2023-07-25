@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from class_size_predictor import returnClassSize
+from src.class_size_predictor import returnClassSize
 
 app = Flask(__name__)
 
