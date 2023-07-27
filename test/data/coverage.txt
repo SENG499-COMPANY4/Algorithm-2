@@ -1,0 +1,9 @@
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+app.py                       31      3    90%
+class_size_predictor.py      78      1    99%
+test_endpoint.py             35      1    97%
+test_errors.py               42      1    98%
+test_regression.py          103      6    94%
+---------------------------------------------
+TOTAL                       289     12    96%
