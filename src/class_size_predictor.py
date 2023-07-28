@@ -219,8 +219,14 @@ def returnClassSize(data_from_post):
     predictions_json = []
 
     for course in data_from_post:
-            semesters_to_predict = semestersToPredict(course)
-            predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
-            predictions_json += convertToJSON(predictions, course['course'])
+        semesters_to_predict = semestersToPredict(course)
+        if len(course["pastEnrollment"]) == 1:
+            prediction = []
+            for s in semesters_to_predict:
+                prediction.append({"course":course["course"],"size":course["pastEnrollment"][0]["size"],"term":int(s[-1:])})
+            predictions_json += prediction
+            continue
+        predictions = classSizePredictor(course, semesters_to_predict, order = (0, 0, 0), seasonal_order=(0, 0, 0, 3))
+        predictions_json += convertToJSON(predictions, course['course'])
     return predictions_json
 
