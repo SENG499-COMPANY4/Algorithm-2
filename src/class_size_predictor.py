@@ -107,10 +107,10 @@ def classSizePredictor(data, semesters_to_predict, order, seasonal_order):
     df_list = [df[df['term'] == term] for term in unique_terms]
 
     for term in df_list:
-        if term.shape[0] < 3:
+        if term.shape[0] < 4:
             # Get the last size in the term
             recent_size = term['size'].iloc[-1]
-            new_size = recent_size * 1.05 # Rate of enrollment growth
+            new_size = recent_size * 1.0425 # Rate of enrollment growth
             
             # Set new size to the same term in predictions_df
             predictions_df.loc[predictions_df['term'] == term['term'].iloc[0], 'size'] = new_size
