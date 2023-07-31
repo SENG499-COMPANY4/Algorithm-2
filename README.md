@@ -3,74 +3,64 @@
 
 # README for Running Algo 2 Flask Application Locally
 
-This README provides instructions on how to run the Algo2 Flask application locally on your machine. The Algo2 Flask application is a service that predicts the class sizes for the next year of the Software Engineering Uvic course by analyzing previous class size trends using the SARIMA time series analysis model.
+The Algo2 Flask application predicts the class sizes for the next year of the Software Engineering Uvic course using the SARIMA time series analysis model. This guide details how to set up and run the application on your local machine.
 
 ## Prerequisites
 
-- Python 3 installed on your machine. You can download Python from [here](https://www.python.org/downloads/). You can check if Python is installed by typing `python --version` or `python3 --version` in your terminal.
+- Python 3: Check Python installation by typing `python --version` or `python3 --version` in your terminal. If not installed, download Python from [here](https://www.python.org/downloads/).
 - Terminal (Linux/macOS) or Command Prompt/PowerShell (Windows).
 
 ## Steps to Run the Application
 
-### 1. Create a Virtual Environment
+1. **Create a Virtual Environment**: For application dependencies isolation, create a virtual environment named `env`:
 
-For isolation of application dependencies, it's good practice to create a virtual environment.
+   ```sh
+   python3 -m venv env
+   ```
 
-To create a virtual environment named `env`, run the following command:
+2. **Activate the Virtual Environment**:
 
-```sh
-python3 -m venv env
-```
+   For Linux/macOS:
 
-### 2. Activate the Virtual Environment
+   ```sh
+   source env/bin/activate
+   ```
 
-Activate the virtual environment by running:
+   For Windows (Command Prompt):
 
-For Linux/macOS:
+   ```sh
+   env\Scripts\activate.bat
+   ```
 
-```sh
-source env/bin/activate
-```
+   For Windows (PowerShell):
 
-For Windows (Command Prompt):
+   ```sh
+   env\Scripts\Activate.ps1
+   ```
 
-```sh
-env\Scripts\activate.bat
-```
+3. **Install Dependencies**: Install the dependencies from `requirements.txt`:
 
-For Windows (PowerShell):
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-```sh
-env\Scripts\Activate.ps1
-```
+   For Windows, if you encounter an error installing the pip package:
 
-### 3. Install Dependencies
+   ```sh
+   .\env\Scripts\python.exe -m pip install -r requirements.txt
+   ```
 
-Inside the virtual environment, install the dependencies from the `requirements.txt` file located in the same directory as this README:
+4. **Run the Application using Gunicorn**: Start the application with 4 worker processes and bind it to `0.0.0.0:8000`:
 
-```sh
-pip install -r requirements.txt
-```
+   ```sh
+   gunicorn -w 4 -b 0.0.0.0 wsgi:app
+   ```
 
-For Windows, if you encounter an error installing the pip package, try the following command:
+   Access your Flask application at [http://0.0.0.0:8000](http://0.0.0.0:8000).
 
-```sh
-.\env\Scripts\python.exe -m pip install -r requirements.txt
-```
+## Interacting with the Application
 
-### 4. Run the Application using Gunicorn
-
-Run the Flask application using Gunicorn. The following command starts the application with 4 worker processes (`-w 4`) and binds it to `0.0.0.0:8000` (`-b 0.0.0.0:8000`):
-
-```sh
-gunicorn -w 4 -b 0.0.0.0 wsgi:app
-```
-
-Your Flask application should now be running at [http://0.0.0.0:8000](http://0.0.0.0:8000).
-
-## Making Requests to the Application
-
-After your application is running, open a **new terminal window**. Use the following `curl` commands to make POST and GET requests to your application.
+Open a **new terminal window** to make POST and GET requests.
 
 ### Making a GET Request
 
@@ -79,19 +69,10 @@ To make a GET request to the root endpoint:
 ```sh
 curl http://0.0.0.0:8000/
 ```
-This should return the following response:
-
-```
-Hello World!
-```
-
-Note: this is the default response for the root endpoint and confirms that the application is running correctly. POST requests to the root endpoint are not supported.
 
 ### Making a POST Request
 
-To make a POST request to the `predict_class_sizes` endpoint, which expects a JSON object with the following structure as input:
-
-#### Input:
+Use the following structure for your JSON object:
 
 ```json
 [
@@ -110,21 +91,7 @@ To make a POST request to the `predict_class_sizes` endpoint, which expects a JS
 ]
 ```
 
-The application will return a JSON object with the following structure in response. This processing might take a few seconds.
-
-#### Output:
-
-```json
-[
-    {
-        "course": "string",
-        "size": "int",
-        "term": "int"
-    }
-]
-```
-
-Here is an example of a curl command with a sample JSON object that can be found in test/data/one_class_one_pastEnrol.json:
+Run this example command with a sample JSON object:
 
 ```sh
 curl -X POST -H "Content-Type: application/json" -d '[{"course": "csc115", "Term" : [5],"Year" : 2024, "pastEnrollment": [{"year": 2017,"term": 5,"size": 75}]}]' http://0.0.0.0:8000/predict_class_sizes
@@ -136,24 +103,81 @@ The output should look like this:
 [{"course":"csc115","size":75,"term":5}]
 ```
 
+## Making a Request via JSON File
+
+### Create a JSON File
+
+You can create a JSON file in your preferred text editor. Here is an example file named `input_data.json`:
+
+```json
+[
+    {
+        "course": "engr120",
+        "Term" : [1],
+        "Year" : 2024,
+        "pastEnrollment": [
+            {
+                "year": 2017,
+                "term": 1,
+                "size": 393
+            },
+            {
+                "year": 2018,
+                "term": 1,
+                "size": 393
+            },
+            {
+                "year": 2019,
+                "term": 1,
+                "size": 356
+            },
+            {
+                "year": 2020,
+                "term": 1,
+                "size": 354
+            },
+            {
+                "year": 2021,
+                "term": 1,
+                "size": 346
+            },
+            {
+                "year": 2022,
+                "term": 1,
+                "size": 338
+            },
+            {
+                "year": 2023,
+                "term": 1,
+                "size": 319
+            }
+        ]
+    }
+]
+```
+
+### Use JSON File in Curl Command
+
+To make a POST request using the JSON file, use this command (make sure that `input_data.json` is in the same directory):
+
+```sh
+curl -X POST -H "Content-Type: application/json" -d @input_data.json http://0.0.0.0:8000/predict_class_sizes
+```
+
 ## Notes
 
 - Ensure your virtual environment is active when running the application.
-- You can deactivate the virtual environment when you're done by typing `deactivate`.
+- Deactivate the virtual environment when you're done by typing `deactivate`.
+- The POST request should follow the exact JSON structure.
+- The more data provided, the better the prediction.
+- The application is under development; some features may not be fully implemented yet.
 
-## Known Limitations and Requirements
+## Troubleshooting
 
-- The POST request needs to follow the exact JSON structure specified above for the application to process the data correctly.
-- The algorithm performs better with more data; hence, the more data you can provide, the better the prediction will be.
-- The application is under development, and some features may not be fully implemented yet.
+- Ensure the latest version of Python and pip.
+- Ensure the virtual environment is activated, and all dependencies are installed before running.
+- Check if the application is running and if the port is not blocked by your firewall if you get a 'Connection Refused' error.
+- Ensure the JSON object is correctly formatted and matches the expected structure if your POST request isn't returning the expected response.
 
-## Troubleshooting and Verification
+Additional troubleshooting tips will be added as needed.
 
-If you encounter issues while running the application or want to verify if it's running correctly, here are a few tips:
-
-- Ensure you have the latest version of Python and pip installed.
-- Ensure your virtual environment is activated and all dependencies are installed before running the application.
-- If you get a 'Connection Refused' error when trying to access the application, check if the application is running and if the port is not blocked by your firewall.
-- If your POST request isn't returning the expected response, ensure that the JSON object is correctly formatted and matches the expected structure.
-
-[Additional troubleshooting tips will be added as they become known]
